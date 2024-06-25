@@ -1,19 +1,30 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(BattleShips LANGUAGES CXX)
+project(Scraper LANGUAGES CXX)
 
-add_executable(BattleShips
-        Engine/Engine.cpp
-        Engine/Engine.hpp
+add_executable(Scraper
         Source/Main.cpp
-        Source/Globals.hpp
-        Engine/StateMachine.hpp
-        Engine/State.hpp
-        States/StatesWrapper.hpp
-        States/StatesConf.hpp
-        States/StateMenu.cpp
-        States/StateMenu.hpp
-        Source/PromptSingleton.cpp
-        Source/PromptSingleton.hpp
-        Engine/TextFormatter.hpp
+        Api/ApiManager.cpp
+        Api/ApiManager.hpp
+        Text/OutputFormatter.hpp
+        Text/OutputFormatter.cpp
+)
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
+
+include(FetchContent)
+FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
+        GIT_TAG 3020c34ae2b732121f37433e61599c34535e68a8)
+FetchContent_MakeAvailable(cpr)
+
+include(FetchContent)
+FetchContent_Declare(json GIT_REPOSITORY https://github.com/nlohmann/json.git
+        GIT_TAG 8c391e04fe4195d8be862c97f38cfe10e2a3472e)
+FetchContent_MakeAvailable(json)
+
+target_link_libraries(Scraper
+        PRIVATE "-static" cpr::cpr
+        nlohmann_json
 )

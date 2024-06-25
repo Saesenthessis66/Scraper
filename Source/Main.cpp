@@ -1,19 +1,17 @@
 //
 // Created by lucja on 14.06.2024.
 //
-#include "..//Engine/Engine.hpp"
-
-
-PromptSingleton* PromptSingleton::instancePtr = nullptr;
+#include "..//Text/OutputFormatter.hpp"
 
 int main()
 {
-    Engine engine = Engine();
+    SetConsoleOutputCP(CP_UTF8);
 
-    while(1)
-    {
-        engine.run();
-    }
+    OutputFormatter out = OutputFormatter();
+
+    std::cout<<out.getData();
+
+    int a; std::cin>>a; // lock command line
 
     return 0;
 }
